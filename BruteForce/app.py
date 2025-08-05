@@ -15,14 +15,14 @@ app.secret_key = os.urandom(24)
 db_config = {
     "host" : "localhost",
     "user" : "root",
-    "password" : "",
+    "password" : "password",
     "database" : "MachineLearning"
 }
 
 
 #password encrpytion
 def hash_password(password):
-    return hashlib.sha256(password.encoode()).hexdigest()
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def get_db_connection():
     return mysql.connector.connect(**db_config)
