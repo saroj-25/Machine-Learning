@@ -42,7 +42,7 @@ def register():
             cur.close()
             conn.close()
             flash("User Registered Successfully", "success")
-            return redirect(url_for('login'))  # Optional: redirect after POST
+            return redirect(url_for('login'))  
         except Exception as e:
             flash(f"Error: {e}", "danger")
 
