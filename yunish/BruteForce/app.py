@@ -1,0 +1,45 @@
+#import required libraries for flask
+
+from flask import Flask, render_template, request, redirect, url_for,session, jsonify
+import mysql.connector
+import hashlib
+import os
+
+#initialize flask app
+app= Flask(__name__)
+app.secret_key= os.urandom(24)  #makes flask app password through secured(for security, optional)
+
+#mysql connection
+db_config= {
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "database": "MachineLearning"
+}
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def get_db_connection():
+    return mysql.connector.connect(**db_config)
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/register")
+def register():
+    return  render_template("register.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/crack")
+def crack():
+    return render_template("crack.html")
+
+#run flask application
+if __name__== "__main__":
+    app.run(debug= True)
