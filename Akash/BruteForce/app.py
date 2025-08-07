@@ -12,9 +12,13 @@ app.secret_key=os.urandom(24)
 db_config={
       "host":"localhost",
       "user":"root",
-      "password":"manjilman@18",
+      "password":"Cityp@lp@123",
       "database":"MachineLearning"
 }
+
+#check database connectivity 
+
+
 # password encryption
 def hash_passsword(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -26,16 +30,41 @@ def get_connection():
 def home():
     return render_template("index.html")
 
-@app.route('/register')
+@app.route('/register' ,methods=['GET','POST'])
 def register():
-    return render_template("register.html")
-@app.route('/login')
+    if request.method == 'POST':
+        userName = request.form['userName']
+        password = hash_passsword(request.form['password'])
+
+         #exception handling
+        try:
+            conn=get_connection()
+            cur=conn.cursor()
+            # cur.execute("SHOW DATABASES")
+            # conn.commit()
+            cur.execute("INSERT INTO Users(userName,password)VALUES(%s,%s)",(userName,password))
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            flash(f"Error:{e}","danger")
+            
+    return render_template("register.html", message="User registered Successfully" , category="success")
+
+
+
+@app.route('/login',methods=['GET','POST'])
 def login():
+    action = request.form['action']
+
     return render_template("login.html")
 
-@app.route('/crack')
+@app.route('/crack',methods=['GET','POST'])
 def crack():
     return render_template("crack.html")
+@app.route('/',methods=['GET','POST'])
+def logout():
+        return render_template(url_for('home'))
 
 
 #run flask application
