@@ -12,8 +12,8 @@ app.secret_key=os.urandom(24)
 db_config={
       "host":"localhost",
       "user":"root",
-      "password":"helloworld",
-      "database":"MachineLearning"
+      "password":"helloworld@123",
+      "database":"myproject"
 }
 # password encryption
 def hash_passsword(password):
@@ -38,7 +38,7 @@ def register():
             #insert user into database
             conn=get_db_connection()
             cur=conn.cursor()
-            cur.execute("INSERT INTO USERS(username,password)VALUES(%s,%s)",userName,password)
+            cur.execute("INSERT INTO USERS(username,password)VALUES(%s%s)",userName,password)
             conn.commit()
             cur.close()
             conn.close()
