@@ -1,6 +1,6 @@
-# Import required libraries for flask
-
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+#Import required libraries for flask
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify,flash
+from shlex import quote
 
 import mysql.connector
 import hashlib
@@ -15,7 +15,7 @@ app.secret_key = os.urandom(24)
 db_config = {
     "host" : "localhost",
     "user" : "root",
-    "password" : "password",
+    "password" : "",
     "database" : "MachineLearning"
 }
 
@@ -31,17 +31,83 @@ def get_db_connection():
 def home():
     return render_template("index.html")
 
-@app.route('/register')
+@app.route('/register', methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    message = None
+    if request.method == "POST":
+        userName = request.form['userName']
+        password = request.form['password']
+        password = hash_password(password)
+        
+        if not userName or not password:
+            msg = quote("Username or password cannot be empty.")
+            return redirect(f"/register?msg={msg}")
 
-@app.route('/login')
+
+
+        try:
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute("INSERT INTO Users(username, password) VALUES (%s, %s)", (userName, password))
+            conn.commit()
+            cur.close()
+            conn.close()
+            msg = quote("User Registered Successfully")
+            return redirect(f"/register?msg={msg}")
+        except Exception as e:
+            message = quote(f"Error: {e}")
+            return redirect(f"/register?msg={message}")
+    return render_template("register.html", message="user register sucessfully")
+
+
+
+@app.route('/login', methods=["GET","POST"])
 def login():
+    action = request.form.get('action')   # For login, bruteforce
+    
+    if request.method == 'POST':
+        username = request.form['userName']
+
+
+        # database connection
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT password FROM users WHERE UserName = %s", (username,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if not row:
+            msg = quote("User not Found") 
+            redirect(f"/login?msg={msg}")
+            
+
+        if(action == 'login'):
+                stored_hash = row[0]
+                password = request.form['password']
+                if hash_password(password) == stored_hash:
+                    session['username'] = username
+                    msg = quote("login sucessfully!!!")
+                    return redirect(f"/?msg={msg}")
+                else:
+                    msg = quote("Incorrect username or password!")
+                    return redirect(f"/login?msg={msg}")    
+            
+            
+            # elif(action == 'brute'):
+
+
+
     return render_template("login.html")
 
-@app.route('/crack')
+@app.route('/logout')
+def logout():
+    return render_template(url_for('home'))
+
+@app.route('/crack', methods=["GET","POST"])
 def crack():
     return render_template("crack.html")
+
 
 # run flask application
 if __name__ == '__main__':
