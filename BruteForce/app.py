@@ -88,7 +88,7 @@ def login():
             if hash_password(password) == stored_hash:
                 session['username'] = username
                 msg = quote("Logged in Successfully!!")
-                return redirect(f"/")
+                return redirect(f"/login?msg={msg}")
             else:
                 msg = quote("Incorrect username or password!!")
                 return redirect(f"/login?msg={msg}")

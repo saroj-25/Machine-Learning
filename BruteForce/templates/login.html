@@ -4,7 +4,7 @@
  <meta charset="UTF-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <title>Flask Auth - Login</title>
- <link rel="stylesheet" href="/BruteForce/Static/style.css">
+ <link rel="stylesheet" href="/static/style.css">
 
 </head>
 <body>
@@ -56,11 +56,18 @@
 
 
    }
- const urlParams = new URLSearchParams(window.location.search);
-  const message = urlParams.get("msg");
-  if (message) {
-    alert(decodeURIComponent(message));
+const urlParams = new URLSearchParams(window.location.search);
+const message = urlParams.get("msg");
+if (message) {
+  alert(decodeURIComponent(message));
+  if (message.includes("Logged in Successfully!!")) {
+    window.location.href = "/";
+  } else {
+    window.location.href = "/login";
   }
+}
+
+
 
  </script>
 </body>

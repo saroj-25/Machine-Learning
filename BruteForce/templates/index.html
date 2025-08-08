@@ -3,18 +3,18 @@
 <head>
    <title> Auth System</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 
 </head>
 <body>
 
-   <div class="icon"><i class="fas fa-infinity"></i></div>
+   <h2><div class="icon"><i class="fas fa-infinity"></i></div></h2>
 
    <h2>
        {% if username %}
            Welcome, {{ username }} 
        {% else %}
-           Welcome to Flask Auth System
+           <h1>Welcome to Flask Auth System</h1><br><br>
        {% endif %}
    </h2>
 
@@ -22,16 +22,17 @@
   <div class="alert alert-{{ category }}">{{ message }}</div>
 {% endif %}
 
-
+<h3>
    <div class="nav-links">
        {% if username %}
            <a href="/logout">Logout</a>
        {% else %}
-           <a href="/register">Register</a> |
+           <p><a href="/register">Register</a> |
            <a href="/login">Login</a> |
-           <a href="/crack">Crack Password</a>
+           <a href="/crack">Crack Password</a></p>
        {% endif %}
    </div>
+</h3>
 
 </body>
 </html>

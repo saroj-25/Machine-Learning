@@ -10,17 +10,18 @@
   
 
   <div class="container">
-    <h1>Register</h1>
+    <h1>Register<br></h1>
     <form method ="POST" action = "/register">
-        <label for="UserName" >Username</label>
+        <label for="UserName" >  <b>Username</b> </label>
         <input type="text" name = "UserName"><br><br>
-        <label for="Password">Password</label>
+        <label for="Password"><b>Password<b></label>
         <input type="Password" name = "Password" >
-        <input type="submit" value = "Register"><br>
+        <button type="submit" name="action" value="Register"> Register</button><br>
 
     </form>
-    <a href="\"> Back to home</a><br><br><br>
+  
   </div>
+   <h3> <br><a href="\"> Back to home</a><br></h3>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const message = urlParams.get("msg");
