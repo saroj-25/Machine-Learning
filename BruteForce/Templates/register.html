@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" href="/sudip/BruteForce/static/register.css">
+    <link rel="stylesheet" href="/static/register.css">
 </head>
 <body>
    <form method="POST" action="">
@@ -16,5 +16,13 @@
     <input type="submit" value="Register">
 </form>
 <a href="index.html">Are you already a user?</a>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get("msg");
+    if (message) {
+        alert(decodeURIComponent(message));
+    }
+</script>
 </body>
 </html>

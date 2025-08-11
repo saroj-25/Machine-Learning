@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+   <title> Auth System</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/sudip/BruteForce/static/style.css">
+
 </head>
-<body style="background-color: black;">
-    <p style="background-color: aqua; font-size: 200px; text-align: center; font-weight: bold;">Hello Developer!</p>
-    <p style="color: red; font-size: 40px; margin-bottom: 20px; text-align: center;">This is Sky</p>
+<body>
+
+   <div class="icon"><i class="fas fa-infinity"></i></div>
+
+   <h2>
+       {% if username %}
+           Welcome, {{ username }} 
+       {% else %}
+           Welcome to Flask Auth System
+       {% endif %}
+   </h2>
+
+{% if message %}
+  <div class="alert alert-{{ category }}">{{ message }}</div>
+{% endif %}
+
+
+   <div class="nav-links">
+       {% if username %}
+           <a href="/logout">Logout</a>
+       {% else %}
+           <a href="/register">Register</a> |
+           <a href="/login">Login</a> |
+           <a href="/crack">Crack Password</a>
+       {% endif %}
+   </div>
+
 </body>
 </html>

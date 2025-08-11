@@ -1,173 +1,140 @@
-# # import  required libraris for Flask
+#Import required libraries for flask
 
-# from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify,flash
+from shlex import quote
 
-# import mysql.connector
-# import hashlib
-# import os
-
-# app = Flask(__name__)
-# app.secret_key= os.urandom(24)
-
-# #mysql configuration (connection)
-
-# db_config = {
-#     "host" : "localhost",
-#     "user" : "root",
-#     "password" : "",
-#     "database" : "machinelearning"
-# }
-
-# #password encrypt
-# def hash_password(password):
-#     return hashlib.sha256(password.encode()).hexdigest()
-
-# def get_db_conection():
-#     return mysql.connector.connect(**db_config)
-
-# @app.route('/')
-# def home():
-#     return render_template("index.html")
-
-# @app.route ('/register', methods=["GET", "POST"])
-# def register():
-#     if request.method == "POST":
-#         UserName = request.form['userName']
-#         hash_password = hash_password(request.form['password'])
-
-#         #exception
-#         try:
-#             #insert userinto database
-#             conn = get_db_conection()
-#             cur=conn.cursor()
-#             cur.execute("INSERT INTO Users (username,password) VALUES(%s,%s)", (UserName,hash_password))
-#             conn.commit()
-#             cur.close()
-#             conn.close()
-#         except Exception as e:
-#             flash(f"Error: {e}","danger")
-        
-#         #password
-
-        
-#     return render_template("register.html", message= "You Registered!!!", category ="success" )
-
-# @app.route('/login')
-# def login():
-#     #action = request.form['action'] #used for the login,register,bruteforce
-
-#     return render_template("login.html")
-
-# @app.route('/')
-# def logout():
-#     return render_template('home')
-
-
-# @app.route('/crack')
-# def crack():
-#     return render_template("crack.html")
-
-
-# #run application
-
-# if __name__ == '__main__':
-#     app.run(debug= True)
-
-
-from flask import Flask, render_template, request, redirect, url_for, flash, session
 import mysql.connector
 import hashlib
 import os
 
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# MySQL configuration
+
+# mysql connection
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "machinelearning"
+    "host" : "localhost",
+    "user" : "root",
+    "password" : "",
+    "database" : "MachineLearning"
 }
 
-# Password hashing
+
+#password encrpytion
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# DB connection
 def get_db_connection():
     return mysql.connector.connect(**db_config)
 
-# Home route
 @app.route('/')
 def home():
     return render_template("index.html")
 
-# Register route
+# @app.route('/register', methods=["GET","POST"])
+# def register():
+#     if request.method == "POST":
+#         userName = request.form['userName']
+#         print(userName)
+#         password = request.form['password']
+#         password = hash_password(password)
+
+#         #exception
+#         try:
+#             #insert user into database
+#             conn = get_db_connection()
+#             print("connection check"+conn)
+#             cur = conn.cursor()
+#             print("Curser check"+cur)
+#             cur.execute("INSERT INTO users(username, password) VALUES (%s, %s)",(userName,password))
+#             conn.commit()
+#             cur.close()
+#             conn.close()
+#         except Exception as e:
+#             flash(f"Error:{e}", "danger")
+
+#     return render_template("register.html", message="User Registered Successfully", category="success")
+
+
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    message = None
     if request.method == "POST":
-        username = request.form['userName']
+        userName = request.form['userName']
         password = request.form['password']
-        hashed_pw = hash_password(password)
+        password = hash_password(password)
+        
+        if not userName or not password:
+            msg = quote("Username or password cannot be empty.")
+            return redirect(f"/register?msg={msg}")
+
+
 
         try:
             conn = get_db_connection()
             cur = conn.cursor()
-            cur.execute("SELECT * FROM Users WHERE username = %s", (username,))
-            if cur.fetchone():
-                flash("Username already exists.", "warning")
-            else:
-                cur.execute("INSERT INTO Users (username, password) VALUES (%s, %s)", (username, hashed_pw))
-                conn.commit()
-                flash("You Registered Successfully!", "success")
-                return redirect(url_for('login'))
+            cur.execute("INSERT INTO Users(username, password) VALUES (%s, %s)", (userName, password))
+            conn.commit()
             cur.close()
             conn.close()
+            msg = quote("User Registered Successfully")
+            return redirect(f"/register?msg={msg}")
         except Exception as e:
-            flash(f"Error: {e}", "danger")
+            message = quote(f"Error: {e}")
+            return redirect(f"/register?msg={message}")
+    return render_template("register.html", message="user register sucessfully")
 
-    return render_template("register.html")
 
-# Login route
-@app.route('/login', methods=["GET", "POST"])
+
+@app.route('/login', methods=["GET","POST"])
 def login():
-    if request.method == "POST":
-        username = request.form['userName']
-        password = request.form['password']
-        hashed_pw = hash_password(password)
+    action = request.form.get('action')   # For login, bruteforce
+    
+    if request.method == 'POST':
+        username = request.form['UserName']
 
-        try:
-            conn = get_db_connection()
-            cur = conn.cursor()
-            cur.execute("SELECT * FROM Users WHERE username = %s AND password = %s", (username, hashed_pw))
-            user = cur.fetchone()
-            cur.close()
-            conn.close()
 
-            if user:
-                session['username'] = username
-                flash("Login successful!", "success")
-                return redirect(url_for('home'))
-            else:
-                flash("Invalid credentials.", "danger")
-        except Exception as e:
-            flash(f"Error: {e}", "danger")
+        # database connection
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT password FROM users WHERE UserName = %s", (username,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if not row:
+            msg = quote("User not Found") 
+            redirect(f"/login?msg={msg}")
+            
+
+        if(action == 'login'):
+                stored_hash = row[0]
+                password = request.form['password']
+                if hash_password(password) == stored_hash:
+                    session['username'] = username
+                    msg = quote("login sucessfully!!!")
+                    return redirect(f"/")
+                else:
+                    msg = quote("Incorrect username or password!")
+                    return redirect(f"/login?msg={msg}")    
+            
+            
+            # elif(action == 'brute'):
+
+
 
     return render_template("login.html")
 
-# Logout route
 @app.route('/logout')
 def logout():
-    session.clear()
-    flash("You have been logged out.", "info")
-    return redirect(url_for('home'))
+    return render_template(url_for('home'))
 
-# Crack route
-@app.route('/crack')
+@app.route('/crack', methods=["GET","POST"])
 def crack():
     return render_template("crack.html")
 
-# Run the app
+
+# run flask application
 if __name__ == '__main__':
     app.run(debug=True)
