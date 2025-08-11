@@ -9,7 +9,7 @@
   <body>
     <form method="post">
       <div class="mb-3">
-        <label >Email address</label>
+        <label>Email address</label>
         <input type="text" name="userName" />
       </div>
       <div class="mb-3">
@@ -20,5 +20,12 @@
     </form>
 
     <a href="/">Back to home?</a>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const message = urlParams.get("msg");
+      if (message) {
+        alert(decodeURIComponent(message));
+      }
+    </script>
   </body>
 </html>
