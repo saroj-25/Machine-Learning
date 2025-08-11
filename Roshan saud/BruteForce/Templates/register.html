@@ -3,7 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <title>Register</title>
-  <link rel="stylesheet" href="BruteForce/static/style.css">
+  <!-- <link rel="stylesheet" href="BruteForce/static/style.css"> -->
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 400px;
+        background: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 12px;
+        margin: 50px auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 6px;
+        outline: none;
+    }
+    button {
+        background: #00fff5;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    button:hover {
+        background: #00d4d4;
+    }
+    a{
+        color: #00fff5;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+  </style>
 
 </head>
 <body>
@@ -12,7 +61,7 @@
    <h1>Register</h1>
    <form action="/register" method="post">
     <label for="username">Username: </label>
-    <input type="text" name="userName"><br><br>
+    <input type="text" name="username"><br><br>
     <label for="password">Password: </label>
     <input type="password" name="password" ><br><br>
      <button type="submit">Register</button><br><br>

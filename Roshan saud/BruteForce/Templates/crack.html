@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Crack Password - Flask Auth</title>
+ <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 500px;
+        background: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 12px;
+        margin: 50px auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    h2 {
+        margin-bottom: 20px;
+        color: #00fff5;
+    }
+    label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 6px;
+        outline: none;
+    }
+    button {
+        background: #00fff5;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    button:hover {
+        background: #00d4d4;
+    }
+    a {
+        color: #00fff5;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    .result {
+        background: rgba(0,255,245,0.2);
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+ </style>
+
+</head>
+<body>
+
+ <div class="container">
+   <h2> Crack Password from Hash</h2>
+
+   <form method="post">
+     <label for="hash">SHA-256 Hash:</label>
+     <input type="text" name="hash" id="hash" required>
+     <br><br>
+
+     <label for="wordlist">Wordlist (one password per line):</label>
+     <textarea name="wordlist" id="wordlist" rows="10" required></textarea>
+     <br><br>
+
+     <button type="submit">Crack</button>
+   </form>
+
+   {% if result %}
+     <div class="result">{{ result }}</div>
+   {% endif %}
+
+   <a href="/">← Back to Home</a>
+ </div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const msg = params.get("msg");
+  if (msg) alert(decodeURIComponent(msg));
+</script>
+
+</body>
+</html>
