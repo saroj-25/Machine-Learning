@@ -2,25 +2,33 @@
 <html>
 <head>
   <title>Register</title>
-  <link rel="stylesheet" type="text/css" href="/Machine-Learning/alisha/static/style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
   <div class="login-container">
-    <h2>Login</h2>
-    <form action="/login" method="POST">
+    <h2>Register</h2>
+    <form action="/register" method="POST">
       <label for="username">Username</label>
-      <input type="text" id="username" name="userName" required>
+      <input type="text" id="username" name="username" required>
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
 
-      <button type="submit" value="Login">Register</button>
-      
+      <button type="submit">Register</button>
     </form>
-    <br><br>
-    <a href=" / ">Back to Home</a>
+
+    <br>
+    <a href="/">Back to Home</a>
   </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get("msg");
+    if (message) {
+      alert(decodeURIComponent(message));
+    }
+  </script>
 
 </body>
 </html>
