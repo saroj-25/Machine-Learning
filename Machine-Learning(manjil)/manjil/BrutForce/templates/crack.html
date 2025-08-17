@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Crack Password - Flask Auth</title>
+ <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+ <div class="container">
+   <h2> Crack Password from Hash</h2>
+   
+   <form method="post">
+     <label for="hash">SHA-256 Hash:</label>
+     <input type="text" name="hash" id="hash" required>
+     <br><br>
+
+     <label for="wordlist">Wordlist (one password per line):</label>
+     <textarea name="wordlist" id="wordlist" rows="10" required></textarea>
+     <br><br>
+
+     <button type="submit">Crack</button>
+   </form>
+
+   {% if result %}
+     <div class="result">{{ result }}</div>
+   {% endif %}
+
+   <a href="/">← Back to Home</a>
+ </div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const msg = params.get("msg");
+  if (msg) alert(decodeURIComponent(msg));
+</script>
+
+</body>
+</html>
