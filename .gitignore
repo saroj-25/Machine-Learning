@@ -1,13 +1,9 @@
-
 __pycache__/
 *.pyc
 
-
 .venv
-
-supervised_learning/
-images
+.venv_new
 
 dlib
 
-.venv_new
+Machine-Learning
