@@ -4,3 +4,10 @@ __pycache__/
 
 
 .venv
+
+supervised_learning/
+images
+
+dlib
+
+.venv_new
