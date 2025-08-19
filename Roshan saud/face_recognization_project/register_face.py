@@ -14,7 +14,7 @@ import pickle
 
 # get current directory of user
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-print(BASE_DIR)
+# print(BASE_DIR)
 
 
 # dataset and encoding inside the project
@@ -44,15 +44,18 @@ counter = 0
 
 while True:
     ret, frame = cap.read()
-    if not ret:
+    ## ret: Boolean result (True if frame captured successfully).
+    ## frame: The actual image (numpy array).
+    if not ret:  # if ret = false, not ret = true which means break! 
         print("Failed to capture frame")
         break
     cv2.imshow("Registerd frame",frame)
     key = cv2.waitKey(1) & 0xFF 
-    if key == ord('c'):   # ord : convert into ASCII
+    if key == ord('c'):   # ord() function converts a character to ASCII integer for comparison.
         # recognize rgb value for face
         rgb = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        boxes = face_recognition.face_locations(rgb)
+        boxes = face_recognition.face_locations(rgb)    ## Detects faces, returns a list of bounding boxes ((T, R, B, L) coordinates).
+
 
         if (len(boxes)==0):
             print("No face detected, try again!")
@@ -68,23 +71,24 @@ while True:
         cv2.imwrite(filepath, face_img)
 
 
-        # Encode face: so, that machine will understood
+        # Converts face into a 128-dimensional numerical vector (machine-readable format).
         encodings = face_recognition.face_encodings(rgb, [box])
         if encodings:
-            known_encoding.append(encodings[0])
-            known_name.append(name)
+            known_encoding.append(encodings[0])  # Add face encoding
+            known_name.append(name)            # Add corresponding name
             print(f"Saved face {counter} for {name}")
         counter += 1
     elif key == ord("q"):
         break
 
 
+# Release webcam and close OpenCV windows
 cap.release()
 cv2.destroyAllWindows()
 
 
 
-# Save incoding inside project 
+# Save all encodings and names to a file for future use
 with open(ENCODING_FILE, "wb") as f:
     pickle.dump((known_encoding, known_name), f)
 
