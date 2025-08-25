@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartoonify Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Cartoonified Image</h1>
+    <div>
+        <h3>Original</h3>
+        <img src="{{ url_for('uploaded_file', filename=original) }}" width="300">
+    </div>
+    <div>
+        <h3>Cartoonified</h3>
+        <img src="{{ url_for('uploaded_file', filename=cartoon) }}" width="300">
+    </div>
+    <br>
+    <a href="{{ url_for('uploaded_file', filename=cartoon) }}" download>Download Cartoon Image</a>
+    <br><br>
+    <a href="/">Try Another</a>
+</body>
+</html>

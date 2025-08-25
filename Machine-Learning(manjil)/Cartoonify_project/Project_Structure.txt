@@ -1,0 +1,13 @@
+    cartoonify_project/
+│── static/               # store CSS, JS, cartoonified images for download
+│   ├── css/
+│   │   └── style.css
+│   └── uploads/          # save uploaded images
+│
+│── templates/            # HTML files for Flask
+│   ├── index.html        # upload page
+│   └── result.html       # cartoonified result page
+│
+│── cartoonify.py         # main cartoonify filter logic
+│── app.py                # flask app
+│── README.md             # project description
