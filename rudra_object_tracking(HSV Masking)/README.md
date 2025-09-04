@@ -1,17 +1,20 @@
-# Object Tracking with Color (HSV Masking)
+# Color Tracking Web App
 
-## Overview
+A simple Flask-based web application to track multiple colors in real-time using your webcam.  
+The app detects colors like **Red, Green, Blue, Yellow, Black** and shows bounding boxes with the color name. You can also capture snapshots of detected colors.
 
-This project demonstrates real-time object tracking using HSV color masking and Flask for web streaming. The object (e.g., a red ball) is tracked based on its color in the HSV color space.
+---
 
+## Features
 
+- Real-time color detection using webcam.
+- Bounding boxes drawn around detected colors.
+- Names of detected colors displayed on the frame.
+- Press **'c'** to capture the frame as a `.jpg` image with detected colors.
+- Press **'e'** to exit the program.
+- Saves captured images in `captures/` folder with names of detected colors.
+
+---
 
 ## Folder Structure
-
-
-- `app.py`: Flask application to stream video with tracked objects.
-- `detection/color_tracker.py`: Contains the `ColorTracker` class for HSV-based tracking.
-- `models/`: Directory to save and load tracker models.
-- `templates/index.html`: HTML template for the Flask app.
-- `requirements.txt`: List of Python dependencies.
 
