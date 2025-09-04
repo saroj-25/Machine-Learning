@@ -16,5 +16,5 @@ The app detects colors like **Red, Green, Blue, Yellow, Black** and shows boundi
 
 ---
 
-## Folder Structure
+
 
