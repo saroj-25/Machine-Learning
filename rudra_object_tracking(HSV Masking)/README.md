@@ -8,8 +8,8 @@ The app detects colors like **Red, Green, Blue, Yellow, Black** and shows boundi
 ## Features
 
 - Real-time color detection using webcam.
-- Bounding boxes drawn around detected colors.
-- Names of detected colors displayed on the frame.
+- boxes drawn around detected colors.
+- Names of detected colors displayed on the frame with coloured boxes border .
 - Press **'c'** to capture the frame as a `.jpg` image with detected colors.
 - Press **'e'** to exit the program.
 - Saves captured images in `captures/` folder with names of detected colors.
