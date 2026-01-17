@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <form method="post" action="/login">
+      <div class="mb-3">
+        <label>userName</label>
+        <input type="text" name="userName" />
+      </div>
+      <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input type="password" name="password" />
+      </div>
+      <button type="login">Login</button>
+      <button type="bruteforce">Bruteforce</button>
+
+    </form>
+
+    <a href="/">Back to home?</a>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const message = urlParams.get("msg");
+      if (message) {
+        alert(decodeURIComponent(message));
+      }
+    </script>
+  </body>
+</html>
